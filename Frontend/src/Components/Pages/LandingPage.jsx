@@ -64,7 +64,7 @@ function LandingPage() {
                 }));
     
                 // Send request to backend
-                return fetch("http://localhost:5001/send-questions", {
+                return fetch("https://quizzite.onrender.com/send-questions", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ questions })
