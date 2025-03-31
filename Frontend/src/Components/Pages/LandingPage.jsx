@@ -12,7 +12,7 @@ function LandingPage() {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const [formUrl, setFormUrl] = useState('');
     useEffect(() => {
         // Fetch categories from OpenTDB API
         fetch("https://opentdb.com/api_category.php")
@@ -28,6 +28,12 @@ function LandingPage() {
     const handleGenerateClick = () => {
         setShowInput(true);
     };
+    const decodeHTMLEntities = (text) => {
+        const parser = new DOMParser();
+        const decodedString = parser.parseFromString(text, "text/html").body.textContent;
+        return decodedString;
+    };
+    
     let questionList = [];
     const handleSubmit = () => {
         if (!selectedCategory || !count || !difficulty) {
@@ -50,13 +56,15 @@ function LandingPage() {
                 }));
 
                 questionList = data.results.map(question => ({
-                    text: question.question,
-                    options: [...question.incorrect_answers, question.correct_answer].sort(() => Math.random() - 0.5),
-                    correctAnswer: question.correct_answer // Store correct answer
+                    text: decodeHTMLEntities(question.question),
+                    options: [...question.incorrect_answers, question.correct_answer]
+                            .map(decodeHTMLEntities) // Decode options as well
+                            .sort(() => Math.random() - 0.5),
+                    correctAnswer: decodeHTMLEntities(question.correct_answer)
                 }));
     
                 // Send request to backend
-                return fetch("https://quizzite.onrender.com/send-questions", {
+                return fetch("http://localhost:5001/send-questions", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ questions })
@@ -67,9 +75,9 @@ function LandingPage() {
                 setLoading(false);
                 console.log("Response Data:", data);
                 if (data.formUrl) {
-                    alert(`Form created: ${data.formUrl}`);
+                    //alert(`Form created: ${data.formUrl}`);
+                    prompt("Form created! Copy this link:", data.formUrl);
                     navigate('/quiz-answers', { state: { questionList } });
-                    window.open(data.formUrl, '_blank');
                 } else {
                     alert("Error: " + (data.error || 'Unknown error'));
                 }
@@ -177,6 +185,7 @@ function LandingPage() {
                             </svg>
                         </div>
                     )}
+    
                 </div>
             )}
         </div>
