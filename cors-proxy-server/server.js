@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 
-const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw9FUYOlXpTRtwDwtN1nxxQ8ZOKsvgH0l41BK1gZhotI0eN3qsLDGxiop3z7gEgF-QKng/exec";
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx0hyfZjxsVeVtHfGoMlm75RlUOE-Imvi1hMgCJsRwP0n-qP1KHYwLXRfiwELdm2F-2EQ/exec";
 
 app.get("/", (req, res) => {
     res.send("CORS Proxy Server is running");
