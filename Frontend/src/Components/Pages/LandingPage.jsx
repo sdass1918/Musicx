@@ -74,9 +74,9 @@ function LandingPage() {
             .then(data => {
                 setLoading(false);
                 console.log("Response Data:", data);
-                if (data.formUrl) {
+                if (data.editUrl) {
                     //alert(`Form created: ${data.formUrl}`);
-                    prompt("Form created! Copy this link:", data.formUrl);
+                    prompt("Form created! Copy this link:", data.editUrl);
                     navigate('/quiz-answers', { state: { questionList } });
                 } else {
                     alert("Error: " + (data.error || 'Unknown error'));
