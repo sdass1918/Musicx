@@ -121,7 +121,7 @@ function LandingPage() {
                 <div className="bg-white p-8 rounded-2xl shadow-lg max-w-lg text-center">
                     <h1 className="text-3xl font-bold mb-4">Welcome to Quizzite!</h1>
                     <p className="text-lg text-center mb-6 max-w-lg">
-                        Create custom quizzes instantly using AI. Simply enter a topic or question, and let our AI generate an engaging quiz for you!
+                        Create custom quizzes instantly with Quizzite. Simply enter a topic, number of questions, level, type and let our Quizzite generate an engaging quiz for you!
                     </p>
                     <button
                         onClick={handleGenerateClick}
